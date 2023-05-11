@@ -1,0 +1,25 @@
+1. library 추가
+https://purple-wood-lights.tistory.com/25
+링크 참조 (처음부터 끝까지 그대로 따라하기)
+
+2. build.gradle(app)
+dependencies에 아래 내용 추가
+implementation 'com.jakewharton.threetenabp:threetenabp:1.3.1'
+
+3. gradle.properties (라이브러리 중복 해결)
+android.useAndroidX=true
+android.enableJetifier=true
+
+4. import 에러 - 버전때문
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.annotation.ArrayRes;
+import androidx.annotation.DrawableRes;
+import androidx.annotation.IntDef;
+import androidx.appcompat.widget.AppCompatTextView;
+import androidx.core.text.TextUtilsCompat;
+import androidx.core.view.ViewCompat;
+
+해당하는걸로 바꿔주기
