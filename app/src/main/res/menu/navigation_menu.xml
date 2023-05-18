@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/home"
+        android:icon="@drawable/calendar"
+        android:title="Home"/>
+
+    <item
+        android:id="@+id/myInfo"
+        android:icon="@drawable/person"
+        android:title="내정보"
+        />
+
+    <item
+        android:id="@+id/color"
+        android:icon="@drawable/pallete"
+        android:title="색상선택"
+        />
+
+    <item
+        android:id="@+id/subject"
+        android:icon="@drawable/subject"
+        android:title="과목선택"
+        />
+</menu>

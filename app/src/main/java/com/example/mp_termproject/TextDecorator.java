@@ -12,15 +12,13 @@ public class TextDecorator implements DayViewDecorator {
     private final HashSet<CalendarDay> dates;
     private final Context context;
     private final String priceDay;
-    private final boolean done;
     private final int color;
 
 
-    public TextDecorator(Context context, HashSet<CalendarDay> dates, String priceText, boolean done, int color) {
+    public TextDecorator(Context context, HashSet<CalendarDay> dates, String priceText, int color) {
         this.context = context;
         this.dates = dates;
         this.priceDay = priceText;
-        this.done = done;
         this.color = color;
     }
 
@@ -33,7 +31,7 @@ public class TextDecorator implements DayViewDecorator {
     //장식 적용
     @Override
     public void decorate(DayViewFacade view) {
-        view.addSpan(new AddTextToDates(priceDay,done,color));
+        view.addSpan(new AddTextToDates(priceDay,color));
         //view.setDaysDisabled(true);
     }
 

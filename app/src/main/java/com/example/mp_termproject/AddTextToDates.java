@@ -10,7 +10,7 @@ public class AddTextToDates implements LineBackgroundSpan {
     private String dayPrice;
     private boolean done;
     private int barColor;
-    public AddTextToDates(String text,boolean done, int barColor) {
+    public AddTextToDates(String text, int barColor) {
         dayPrice = text;
         this.done = done;
         this.barColor = barColor;
@@ -23,12 +23,8 @@ public class AddTextToDates implements LineBackgroundSpan {
             CharSequence text, int start, int end, int lineNumber
     ) {
         Paint rectPaint = new Paint();
-        if(done){
-            rectPaint.setColor(barColor);
-        }
-        else{
-            rectPaint.setColor(barColor);
-        }
+        rectPaint.setColor(barColor);
+
         //paint 설정 건드리면 날짜도 같이 바뀜
         //paint.setColor(Color.RED); // 텍스트의 색상 설정
         //paint.setTextSize(24); // 텍스트의 크기 설정

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SubjectFragment"
+    android:id="@+id/subject_fragment">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="과목선택"
+        android:layout_margin="20dp"
+        android:textSize="20sp"/>
+
+    <CheckBox
+        android:id="@+id/swEngineering"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:layout_marginLeft="20dp"
+        android:text="소프트웨어공학"/>
+    <CheckBox
+        android:id="@+id/DataScience"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:layout_marginLeft="20dp"
+        android:text="데이터과학"/>
+    <CheckBox
+        android:id="@+id/mobilePw"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="140dp"
+        android:layout_marginLeft="20dp"
+        android:text="모바일프로그래밍"/>
+    <CheckBox
+        android:id="@+id/seminar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="180dp"
+        android:layout_marginLeft="20dp"
+        android:text="소프트웨어산업세미나"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/save_subject_button"
+        android:layout_marginLeft="20dp"
+        android:text="Save"
+        android:layout_marginTop="220dp"/>
+
+</FrameLayout>
