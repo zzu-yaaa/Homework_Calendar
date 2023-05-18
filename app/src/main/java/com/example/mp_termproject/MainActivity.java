@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.jakewharton.threetenabp.AndroidThreeTen;
@@ -31,14 +33,28 @@ public class MainActivity extends AppCompatActivity {
         materialCalendarView = findViewById(R.id.materialCalendarView);
         dateTextView = findViewById(R.id.dateTextView);
 
-        //지정 날짜에 bar 표시하기
+        //날짜 지정
         HashSet<CalendarDay> dates = new HashSet<>();
         dates.add(CalendarDay.from(2023, 5, 13));
         dates.add(CalendarDay.from(2023, 5, 14));
         dates.add(CalendarDay.from(2023, 5, 15));
 
-        EventDecorator customDecorator = new EventDecorator(Color.RED, dates,this);
+        HashSet<CalendarDay> dates2 = new HashSet<>();
+        dates2.add(CalendarDay.from(2023, 5, 15));
+        dates2.add(CalendarDay.from(2023, 5, 16));
+
+        /*
+        //지정된 날짜에 bar 표시
+        EventDecorator customDecorator = new EventDecorator(Color.GREEN, dates,this);
         materialCalendarView.addDecorator(customDecorator);
+        */
+
+        //지정된 날짜에 textview & rect 표시
+        TextDecorator decorator = new TextDecorator(this, dates,"text", true, Color.RED);
+        materialCalendarView.addDecorator(decorator);
+
+        TextDecorator decorator2 = new TextDecorator(this, dates2,"text", false, Color.GREEN);
+        materialCalendarView.addDecorator(decorator2);
 
         //선택한 날짜 보여주기
         materialCalendarView.setOnDateChangedListener(new OnDateSelectedListener() {
@@ -55,5 +71,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        /*
+        //버튼 누르면 색 바꾸기(테스트용)
+        Button btn_color = findViewById(R.id.btn_color);
+        btn_color.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                EventDecorator customDecorator = new EventDecorator(Color.RED, dates,MainActivity.this);
+                materialCalendarView.addDecorator(customDecorator);
+            }
+        });
+        */
     }
 }

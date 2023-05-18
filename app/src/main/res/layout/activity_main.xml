@@ -35,8 +35,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="아무말2"/>
-
-
+            <Button
+                android:id="@+id/btn_color"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="색 바꾸기"/>
         </LinearLayout>
     </ScrollView>
 
