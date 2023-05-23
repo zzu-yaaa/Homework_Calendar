@@ -57,54 +57,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
 
-/*
-        materialCalendarView = findViewById(R.id.materialCalendarView);
-        dateTextView = findViewById(R.id.dateTextView);
 
-        //날짜 지정
-        HashSet<CalendarDay> dates = new HashSet<>();
-        dates.add(CalendarDay.from(2023, 5, 13));
-        dates.add(CalendarDay.from(2023, 5, 14));
-        dates.add(CalendarDay.from(2023, 5, 15));
+        //home fragment를 메인화면으로 지정
+        HomeFragment homeFragment = new HomeFragment();
+        int containerId = R.id.fragment_container;
 
-        HashSet<CalendarDay> dates2 = new HashSet<>();
-        dates2.add(CalendarDay.from(2023, 5, 15));
-        dates2.add(CalendarDay.from(2023, 5, 16));
-
-        //지정된 날짜에 textview & rect 표시
-
-        TextDecorator decorator = new TextDecorator(this, dates,"text", Color.RED);
-        materialCalendarView.addDecorator(decorator);
-
-        TextDecorator decorator2 = new TextDecorator(this, dates2,"", Color.GREEN);
-        materialCalendarView.addDecorator(decorator2);
-
-        //선택한 날짜 보여주기
-        materialCalendarView.setOnDateChangedListener(new OnDateSelectedListener() {
-            @Override
-            public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
-                int Year = date.getYear();
-                int Month = date.getMonth();
-                int Day = date.getDay();
-
-                String shot_Day = Year + "년 " + Month + "월 " + Day+"일";
-
-                Log.i("shot_Day test", shot_Day + "");
-                dateTextView.setText(shot_Day);
-            }
-        });*/
-
-        /*
-        //버튼 누르면 색 바꾸기(테스트용)
-        Button btn_color = findViewById(R.id.btn_color);
-        btn_color.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                EventDecorator customDecorator = new EventDecorator(Color.RED, dates,MainActivity.this);
-                materialCalendarView.addDecorator(customDecorator);
-            }
-        });
-        */
+        getSupportFragmentManager().beginTransaction()
+                .replace(containerId, homeFragment)
+                .commit();
     }
 
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem){

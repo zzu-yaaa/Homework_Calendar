@@ -13,9 +13,8 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:layout_marginTop="50dp"
-        app:mcv_selectionColor="#FF9800"
-        app:mcv_tileHeight="70dp"
-        />
+        app:mcv_selectionColor="#FF9800"/>
+        <!--app:mcv_tileHeight="80dp"-->
 
     <TextView
         android:id="@+id/dateTextView"

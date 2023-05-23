@@ -73,8 +73,6 @@ public class HomeFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
-
     }
 
     @Override
@@ -101,17 +99,31 @@ public class HomeFragment extends Fragment {
         dates2.add(CalendarDay.from(2023, 5, 15));
         dates2.add(CalendarDay.from(2023, 5, 16));
 
+        HashSet<CalendarDay> dates3 = new HashSet<>();
+        dates3.add(CalendarDay.from(2023, 5, 16));
+        dates3.add(CalendarDay.from(2023, 5, 17));
+        dates3.add(CalendarDay.from(2023, 5, 18));
 
+        materialCalendarView.setTileHeightDp(70);
         materialCalendarView.addDecorators(
-                new SundayDecorator(),
-                new SaturdayDecorator()
+                //new SundayDecorator(),
+                //new SaturdayDecorator()
         );
         //지정된 날짜에 textview & rect 표시
-        TextDecorator decorator = new TextDecorator(ct, dates,"text",  Color.RED);
+        TextDecorator decorator = new TextDecorator(ct, dates,"text",  Color.RED, 1);
         materialCalendarView.addDecorator(decorator);
 
-        TextDecorator decorator2 = new TextDecorator(ct, dates2,"text",  Color.GREEN);
+        TextDecorator decorator2 = new TextDecorator(ct, dates2,"text",  Color.GREEN, 2);
         materialCalendarView.addDecorator(decorator2);
+
+        TextDecorator decorator3 = new TextDecorator(ct, dates3,"text",  Color.BLUE, 3);
+        materialCalendarView.addDecorator(decorator3);
+
+        TextDecorator decorator4 = new TextDecorator(ct, dates3,"text",  Color.YELLOW, 4);
+        materialCalendarView.addDecorator(decorator4);
+
+        TextDecorator decorator5 = new TextDecorator(ct, dates3,"text",  Color.MAGENTA, 5);
+        materialCalendarView.addDecorator(decorator5);
 
         //선택한 날짜 보여주기
         materialCalendarView.setOnDateChangedListener(new OnDateSelectedListener() {
@@ -143,8 +155,9 @@ public class HomeFragment extends Fragment {
         if(getArguments() != null){
 
             textView.setText(getArguments().getInt("unSelected"));
-            textView2.setText(getArguments().getInt("undone_color"));
+            //textView2.setText(getArguments().getInt("undone_color"));
         }
+
 
         return v;
     }
