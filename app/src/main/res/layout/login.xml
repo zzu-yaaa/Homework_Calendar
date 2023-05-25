@@ -64,4 +64,11 @@
         android:text="결과값 출력"
         android:textSize="15dp"
         android:layout_margin="10dp"/>
+    <Button
+        android:id="@+id/returnBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:backgroundTint="#0C58AE"
+        android:text="홈으로"/>
 </LinearLayout>

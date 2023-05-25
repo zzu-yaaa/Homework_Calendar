@@ -1,6 +1,9 @@
 package com.example.mp_termproject;
 
 import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -11,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.jakewharton.threetenabp.AndroidThreeTen;
@@ -18,6 +22,8 @@ import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 
 /**
@@ -34,6 +40,17 @@ public class HomeFragment extends Fragment {
     private int currentTileWidth;
     private int currentTileHeight;
     Context ct;
+
+    ///////////////////
+    Button loginTest;
+    CourseDBHelper courseHelper;
+    AsgDBHelper AsgHelper;
+    ColorDBHelper colorHelper;
+    SQLiteDatabase courseDb, asgDb, colorDb;
+    Cursor cursor;
+
+    String[][] courseArray ; //과목 10개에 강의명과 교수님으로 초기화
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -89,6 +106,46 @@ public class HomeFragment extends Fragment {
         materialCalendarView = v.findViewById(R.id.materialCalendarView);
         dateTextView = v.findViewById(R.id.dateTextView);
 
+        /////////////////////
+        loginTest = (Button) v.findViewById(R.id.loginBtn);
+        loginTest.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ct.getApplicationContext(), Login.class);
+                startActivity(intent);
+            }
+        });
+
+        Log.d("check", "home 다시 돌아오다");  //확인용 로그캣
+
+        //저장된 db 불러오기
+        courseHelper = new CourseDBHelper(ct);
+        AsgHelper = new AsgDBHelper(ct);
+
+        //course table 정보 전부 가져오기
+        courseArray = courseHelper.selectCourse();
+        int cNum = courseHelper.courseNum();
+        for(int i=0; i < cNum; i++) {
+            Log.d("course", Arrays.toString(courseArray[i]));  //확인용 로그캣
+        }
+
+
+        //원하는 과목의 assignment index 가져오기
+        ArrayList<Integer> index = AsgHelper.selectAssignment("소프트웨어공학");  //괄호 안에 원하는 과목명을 입력하면 해당 과목의 과제 index를 return 해준다
+        SQLiteDatabase db = AsgHelper.getReadableDatabase();
+        Cursor c = db.query("Assignment", null,null,null,null,null, null);
+
+        for(int i : index){
+            c.moveToPosition(i);    //해당 index의 row로 이동
+
+            //해당 과제 내용을 변수에 저장하지 않고 로그캣으로 출력해 확인한 형태
+            Log.d("assignment", c.getString(1) + " " + c.getString(2) + " " + c.getString(3) + " "
+                    + c.getString(4) + " " + c.getString(5) + " " + c.getString(6) + " " + c.getString(7) + " ");
+        }
+
+        //////////////////////////
+
         //지정 날짜에 bar 표시하기
         HashSet<CalendarDay> dates = new HashSet<>();
         dates.add(CalendarDay.from(2023, 5, 13));
@@ -110,7 +167,7 @@ public class HomeFragment extends Fragment {
                 //new SaturdayDecorator()
         );
         //지정된 날짜에 textview & rect 표시
-        TextDecorator decorator = new TextDecorator(ct, dates,"text",  Color.RED, 1);
+        TextDecorator decorator = new TextDecorator(ct, dates,c.getString(1),  Color.RED, 1);
         materialCalendarView.addDecorator(decorator);
 
         TextDecorator decorator2 = new TextDecorator(ct, dates2,"text",  Color.GREEN, 2);
@@ -157,6 +214,8 @@ public class HomeFragment extends Fragment {
             textView.setText(getArguments().getInt("unSelected"));
             //textView2.setText(getArguments().getInt("undone_color"));
         }
+
+
 
 
         return v;
