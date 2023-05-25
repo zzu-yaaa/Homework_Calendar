@@ -21,7 +21,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_marginTop="50dp"
                 app:mcv_selectionColor="#FF9800"/>
             <!--app:mcv_tileHeight="80dp"-->
 
@@ -36,20 +35,19 @@
                 android:id="@+id/textView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="아무말2" />
+                android:text="아무말1" />
 
             <TextView
                 android:id="@+id/textView2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="아무말3" />
+                android:text="아무말2" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/textView3"
-                android:layout_marginTop="660dp"
-                android:text="아무말4"/>
+                android:text="아무말3"/>
 
             <Button
                 android:id="@+id/loginBtn"

@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.RadioButton;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -22,10 +23,10 @@ public class ColorFragment extends Fragment {
 
     Button btn_save;
     Context ct;
-    CheckBox green;
-    CheckBox red;
-    CheckBox pink;
-    CheckBox blue;
+    RadioButton green;
+    RadioButton red;
+    RadioButton pink;
+    RadioButton blue;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -81,8 +82,8 @@ public class ColorFragment extends Fragment {
         btn_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int done_id=0;
-                int undone_id=0;
+
+                Bundle bundle = new Bundle();
                 ArrayList<Integer> checkedId = new ArrayList<>();
 
                 if(red.isChecked()){
@@ -101,12 +102,10 @@ public class ColorFragment extends Fragment {
                     checkedId.add(pink.getId());
                 }
 
-                Bundle bundle1 = new Bundle();
-
-                bundle1.putIntegerArrayList("checked_color",checkedId);
+                bundle.putIntegerArrayList("checked_color",checkedId);
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                 HomeFragment homeFragment = new HomeFragment();
-                homeFragment.setArguments(bundle1);
+                homeFragment.setArguments(bundle);
                 transaction.replace(R.id.fragment_container_view,homeFragment);
                 transaction.commit();
 
