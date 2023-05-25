@@ -11,6 +11,8 @@ import android.widget.CheckBox;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import java.util.ArrayList;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link ColorFragment#newInstance} factory method to
@@ -81,37 +83,33 @@ public class ColorFragment extends Fragment {
             public void onClick(View v) {
                 int done_id=0;
                 int undone_id=0;
-                Bundle bundle = new Bundle();
+                ArrayList<Integer> checkedId = new ArrayList<>();
 
                 if(red.isChecked()){
 
-                    done_id=red.getId();
-
+                    checkedId.add(red.getId());
 
                 }else if(green.isChecked()){
 
-                    done_id=green.getId();
+                    checkedId.add(green.getId());
 
                 }
-
-                bundle.putInt("done_color",done_id);
-                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                HomeFragment homeFragment = new HomeFragment();
-                homeFragment.setArguments(bundle);
-                transaction.replace(R.id.fragment_container,homeFragment);
-                transaction.commit();
-
                 if(blue.isChecked()){
-                    undone_id=blue.getId();
+                    checkedId.add(blue.getId());
 
                 }else if(pink.isChecked()){
-                    undone_id=pink.getId();
+                    checkedId.add(pink.getId());
                 }
 
-                bundle.putInt("undone_color",undone_id);
-                homeFragment.setArguments(bundle);
-                transaction.replace(R.id.fragment_container,homeFragment);
+                Bundle bundle1 = new Bundle();
+
+                bundle1.putIntegerArrayList("checked_color",checkedId);
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                HomeFragment homeFragment = new HomeFragment();
+                homeFragment.setArguments(bundle1);
+                transaction.replace(R.id.fragment_container_view,homeFragment);
                 transaction.commit();
+
             }
         });
         return view;

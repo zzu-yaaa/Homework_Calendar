@@ -48,6 +48,6 @@
         android:id="@+id/save_subject_button"
         android:layout_marginLeft="20dp"
         android:text="Save"
-        android:layout_marginTop="220dp"/>
+        android:layout_marginTop="260dp"/>
 
 </FrameLayout>

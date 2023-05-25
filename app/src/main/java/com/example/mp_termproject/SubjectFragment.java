@@ -1,16 +1,21 @@
 package com.example.mp_termproject;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CheckedTextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+
+import java.util.ArrayList;
 
 public class SubjectFragment extends Fragment {
 
@@ -20,43 +25,25 @@ public class SubjectFragment extends Fragment {
     CheckBox mobilePw;
     CheckBox seminar;
     Context ct;
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    SendEventListener sendEventListener;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    //listener달아줌
+    @Override
+    public void onAttach(@NonNull Context context){
+        super.onAttach(context);
+        try{
+            sendEventListener = (SendEventListener) context;
+        }catch (ClassCastException e){
+            throw new ClassCastException(context.toString() + "must implements SendEventListener");
 
-    public SubjectFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment SubjectFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static SubjectFragment newInstance(String param1, String param2) {
-        SubjectFragment fragment = new SubjectFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+        }
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+    public void onDetach(){
+        super.onDetach();
+        if(sendEventListener !=null){
+            sendEventListener = null;
         }
     }
 
@@ -72,46 +59,83 @@ public class SubjectFragment extends Fragment {
         DataScience = v.findViewById(R.id.DataScience);
         mobilePw = v.findViewById(R.id.mobilePw);
         seminar = v.findViewById(R.id.seminar);
+        //violence = v.findViewById(R.id.violence);
 
+
+        //checkedTextView 체크 구현
+//        violence.setChecked(false);
+//        violence.setChecked(true);
+//        View.OnClickListener listener = new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                ((CheckedTextView)v).toggle();
+//            }
+//        };
+//
+//        violence.setOnClickListener(listener);
+
+        //save버튼 눌렀을때 체크박스 체크 된거/안된거 각각 해당list에 담아서 MainActivity로 보내주고 화면전환
         save_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int id;
-                Bundle bundle = new Bundle();
+                //선택된 과목 id담을 arraylist
+                ArrayList<Integer> selectedSubject = new ArrayList<>();
+                //선택되지 않은 과목 id담을 arraylist
+                ArrayList<Integer> unselectedSubject = new ArrayList<>();
 
+                //Home Fragment로 어떤변수를 보내는게 좋을지 정해야함
+                //id만 보내도 home fragment에서 안보여지게 가능한지
+                //과목명text도 있어야 한다면 1.checkedTextView 2.ArrayList hashmap
                 if(swEngineering.isChecked()){
+                    selectedSubject.add(swEngineering.getId());
+                }else {
+                    unselectedSubject.add(swEngineering.getId());
 
-                }else{
-                    id=swEngineering.getId();
-                    bundle.putInt("unSelected",id);
-                    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                    HomeFragment homeFragment = new HomeFragment();
-                    homeFragment.setArguments(bundle);
-                    transaction.replace(R.id.fragment_container,homeFragment);
-                    transaction.commit();
                 }
 
                 if(DataScience.isChecked()){
-                    Toast.makeText(ct,"checked:",Toast.LENGTH_SHORT).show();
+                    selectedSubject.add(DataScience.getId());
                 }else{
-                    Toast.makeText(ct,"Unchecked:",Toast.LENGTH_SHORT).show();
+                    unselectedSubject.add(DataScience.getId());
+
                 }
 
                 if(mobilePw.isChecked()){
-                    Toast.makeText(ct,"checked:",Toast.LENGTH_SHORT).show();
+                    selectedSubject.add(mobilePw.getId());
                 }else{
-                    Toast.makeText(ct,"Unchecked:",Toast.LENGTH_SHORT).show();
+                    unselectedSubject.add(mobilePw.getId());
+
                 }
 
                 if(seminar.isChecked()){
-                    Toast.makeText(ct,"checked:",Toast.LENGTH_SHORT).show();
+                    selectedSubject.add(seminar.getId());
                 }else{
-                    Toast.makeText(ct,"Unchecked:",Toast.LENGTH_SHORT).show();
-                }
+                    unselectedSubject.add(seminar.getId());
 
+                }
+                String msg = "보내고 ";
+                for(int i=0;i<selectedSubject.size();i++){
+                    msg += selectedSubject.get(i) +",";
+                }
+                Toast.makeText(ct,msg,Toast.LENGTH_LONG).show();
+//                Intent intent = new Intent(getActivity(), MainActivity.class);
+//                //127이랑 한번씩 실행해보고 순서영향있나 체크
+//                //sendEventListener.sendSelectedSubject(selectedSubject);
+//                startActivity(intent);
+//
+//                sendEventListener.sendSelectedSubject(selectedSubject);
+                Bundle bundle = new Bundle();
+                bundle.putIntegerArrayList("SelectedSubject",selectedSubject);
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                HomeFragment homeFragment = new HomeFragment();
+                homeFragment.setArguments(bundle);
+                transaction.replace(R.id.fragment_container_view,homeFragment);
+                transaction.commit();
             }
         });
 
         return v;
     }
+
+
 }
