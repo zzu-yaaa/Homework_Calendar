@@ -12,13 +12,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jakewharton.threetenabp.AndroidThreeTen;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Set;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -31,6 +34,21 @@ public class HomeFragment extends Fragment {
     TextView dateTextView;
     TextView textView;
     TextView textView2;
+    TextView textView3;
+    SendEventListener sendEventListener;
+
+    //listener달아줌
+    @Override
+    public void onAttach(@NonNull Context context){
+        super.onAttach(context);
+        try{
+            sendEventListener = (SendEventListener) context;
+        }catch (ClassCastException e){
+            throw new ClassCastException(context.toString() + "must implements SendEventListener");
+
+        }
+    }
+
     private int currentTileWidth;
     private int currentTileHeight;
     Context ct;
@@ -86,6 +104,7 @@ public class HomeFragment extends Fragment {
         ct = container.getContext();
         textView = v.findViewById(R.id.textView);
         textView2 = v.findViewById(R.id.textView2);
+        textView3 = v.findViewById(R.id.textView3);
 
         AndroidThreeTen.init(ct);
         materialCalendarView = v.findViewById(R.id.materialCalendarView);
@@ -103,8 +122,8 @@ public class HomeFragment extends Fragment {
 
 
         materialCalendarView.addDecorators(
-                new SundayDecorator(),
-                new SaturdayDecorator()
+                //new SundayDecorator(),
+                //new SaturdayDecorator()
         );
         //지정된 날짜에 textview & rect 표시
         TextDecorator decorator = new TextDecorator(ct, dates,"text",  Color.RED);
@@ -128,24 +147,47 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        /*
-        //버튼 누르면 색 바꾸기(테스트용)
-        Button btn_color = findViewById(R.id.btn_color);
-        btn_color.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                EventDecorator customDecorator = new EventDecorator(Color.RED, dates,MainActivity.this);
-                materialCalendarView.addDecorator(customDecorator);
+
+        Bundle bundle = getArguments();
+
+
+        if(bundle != null){
+            Set<String> keys = bundle.keySet(); // 번들에 저장된 모든 키 값 가져오기
+
+            for (String key : keys) {
+                // key 값을 활용하여 원하는 동작 수행
+                Log.d("Key", key);
+                if(key.equals("SelectedSubject")){
+                    ArrayList<Integer> list = getArguments().getIntegerArrayList(key);
+                    String msg = "선택된 과목 : ";
+                    for(int i=0;i<list.size();i++){
+                        msg += list.get(i);
+                    }
+                    textView.setText(msg);
+                }
+                else if(key.equals("checked_color")){
+                    ArrayList<Integer> list = getArguments().getIntegerArrayList(key);
+                    String msg = "선택된 색상 : ";
+                    for(int i=0;i<list.size();i++){
+                        msg += list.get(i);
+                    }
+                    textView2.setText(msg);
+                }
             }
-        });
-        */
-
-        if(getArguments() != null){
-
-            textView.setText(getArguments().getInt("unSelected"));
-            textView2.setText(getArguments().getInt("undone_color"));
         }
 
         return v;
+    }
+
+    //MainActivity로부터 받아서 textView text바꿔줌
+    //activity_main이 fragment_home.xml 담고 있으니 여기서 textview settext를 하는건지
+    //그냥 MainActivity.java에서 settext해야할지..
+    public void SelectedSubject(ArrayList<Integer> integerArrayList) {
+        textView.setText("선택된 과목 : "+integerArrayList.size());
+    }
+
+
+    public void sendUnSelectedSubject(ArrayList<Integer> integerArrayList) {
+
     }
 }

@@ -11,12 +11,14 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.hardware.usb.UsbEndpoint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 import com.jakewharton.threetenabp.AndroidThreeTen;
@@ -24,24 +26,35 @@ import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+import javax.security.auth.Subject;
+
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, SendEventListener {
 
     private DrawerLayout drawer;
     NavigationView navigationView;
     private MaterialCalendarView materialCalendarView;
-    private TextView dateTextView;
-    private int currentTileWidth;
-    private int currentTileHeight;
+    TextView dateTextView;
+    HomeFragment homeFragment;
+    SubjectFragment subjectFragment;
+    TextView textView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        textView = findViewById(R.id.textView);
+        dateTextView = findViewById(R.id.dateTextView);
+        homeFragment = (HomeFragment) getSupportFragmentManager().findFragmentById(R.id.home_fragment);
+        subjectFragment = (SubjectFragment) getSupportFragmentManager().findFragmentById(R.id.subject_fragment);
+
+        setLayout();
 
         Toolbar toolbar = findViewById(R.id.toolbar);
+
         setSupportActionBar(toolbar); //toolbar를 MainActivity의 AppBar로 지정
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
@@ -57,72 +70,54 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
 
-/*
-        materialCalendarView = findViewById(R.id.materialCalendarView);
-        dateTextView = findViewById(R.id.dateTextView);
 
-        //날짜 지정
-        HashSet<CalendarDay> dates = new HashSet<>();
-        dates.add(CalendarDay.from(2023, 5, 13));
-        dates.add(CalendarDay.from(2023, 5, 14));
-        dates.add(CalendarDay.from(2023, 5, 15));
-
-        HashSet<CalendarDay> dates2 = new HashSet<>();
-        dates2.add(CalendarDay.from(2023, 5, 15));
-        dates2.add(CalendarDay.from(2023, 5, 16));
-
-        //지정된 날짜에 textview & rect 표시
-
-        TextDecorator decorator = new TextDecorator(this, dates,"text", Color.RED);
-        materialCalendarView.addDecorator(decorator);
-
-        TextDecorator decorator2 = new TextDecorator(this, dates2,"", Color.GREEN);
-        materialCalendarView.addDecorator(decorator2);
-
-        //선택한 날짜 보여주기
-        materialCalendarView.setOnDateChangedListener(new OnDateSelectedListener() {
-            @Override
-            public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
-                int Year = date.getYear();
-                int Month = date.getMonth();
-                int Day = date.getDay();
-
-                String shot_Day = Year + "년 " + Month + "월 " + Day+"일";
-
-                Log.i("shot_Day test", shot_Day + "");
-                dateTextView.setText(shot_Day);
-            }
-        });*/
-
-        /*
-        //버튼 누르면 색 바꾸기(테스트용)
-        Button btn_color = findViewById(R.id.btn_color);
-        btn_color.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                EventDecorator customDecorator = new EventDecorator(Color.RED, dates,MainActivity.this);
-                materialCalendarView.addDecorator(customDecorator);
-            }
-        });
-        */
     }
 
+    private void setLayout() {
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_view, new HomeFragment()).commit();
+
+    }
+
+    //Subject Fragment로부터 넘겨받은 과목id list로 toast메세지 띄워줌
+    @Override
+    public void sendSelectedSubject(ArrayList<Integer> integerArrayList) {
+
+        String msg = "받고 ";
+        for(int i=0;i<integerArrayList.size();i++){
+            msg += integerArrayList.get(i) + ",";
+        }
+
+        if(integerArrayList != null){
+            Toast.makeText(getApplicationContext(),msg,Toast.LENGTH_LONG).show();
+            //textView.setText("선택된 과목 : "+integerArrayList.size()); //다른 프래그먼트 갔다오면 반영되는지 확인해보기
+            //HomeFragment로 ArrayList보내줌
+//            homeFragment.SelectedSubject(integerArrayList);
+        }
+    }
+
+    //홈화면 상단 메뉴클릭했을때
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem){
         switch(menuItem.getItemId()){
             case R.id.home:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_view, new HomeFragment()).commit();
                 break;
             case R.id.myInfo:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new InfoFragment()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_view, new InfoFragment()).commit();
                 break;
             case R.id.color:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ColorFragment()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_view, new ColorFragment()).commit();
                 break;
             case R.id.subject:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SubjectFragment()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_view, new SubjectFragment()).commit();
                 break;
         }
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    //Subject Fragment로부터 선택되지 않은 과목id list 넘겨받음
+    @Override
+    public void sendUnSelectedSubject(ArrayList<Integer> integerArrayList) {
+
     }
 }
