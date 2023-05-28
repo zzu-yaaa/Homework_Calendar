@@ -24,4 +24,10 @@
         android:icon="@drawable/subject"
         android:title="과목선택"
         />
+
+    <item
+        android:id="@+id/speech"
+        android:icon="@drawable/subject"
+        android:title="음성인식"
+        />
 </menu>

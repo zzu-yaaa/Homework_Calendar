@@ -82,6 +82,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.subject:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_view, new SubjectFragment()).commit();
                 break;
+            case R.id.speech:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_view, new SpeechFragment()).commit();
+                break;
         }
         drawer.closeDrawer(GravityCompat.START);
         return true;

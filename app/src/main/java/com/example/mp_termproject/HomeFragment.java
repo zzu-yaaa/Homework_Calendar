@@ -27,10 +27,15 @@ import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 /**
@@ -40,13 +45,10 @@ import java.util.Set;
  */
 public class HomeFragment extends Fragment {
 
-    int doneColor=Color.GRAY;
-    int undoneColor=Color.YELLOW;
+    int doneColor=Color.parseColor("#BEDBFC");
+    int undoneColor=Color.parseColor("#FFB531");
     private MaterialCalendarView materialCalendarView;
     TextView dateTextView;
-    TextView textView;
-    TextView textView2;
-    TextView textView3;
     ListView listView;
     Context ct;
 
@@ -109,13 +111,15 @@ public class HomeFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_home, container, false);
         //activity에서의 activity.this 대체체
         ct = container.getContext();
-        textView = v.findViewById(R.id.textView);
-        textView2 = v.findViewById(R.id.textView2);
-        textView3 = v.findViewById(R.id.textView3);
 
         AndroidThreeTen.init(ct);
         materialCalendarView = v.findViewById(R.id.materialCalendarView);
         dateTextView = v.findViewById(R.id.dateTextView);
+
+        //오늘 날짜 보여주기
+        Date dateNow = Calendar.getInstance().getTime();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy년 M월 dd일", Locale.getDefault());
+        dateTextView.setText(format.format(dateNow).toString());
 
         listView = v.findViewById(R.id.listView);
 
@@ -123,39 +127,11 @@ public class HomeFragment extends Fragment {
         courseHelper = new CourseDBHelper(ct);
         AsgHelper = new AsgDBHelper(ct);
 
-        /*
-        //지정 날짜에 bar 표시하기
-        HashSet<CalendarDay> dates = new HashSet<>();
-        dates.add(CalendarDay.from(2023, 05, 13));
-        dates.add(CalendarDay.from(2023, 05, 14));
-        dates.add(CalendarDay.from(2023, 05, 15));
 
-        HashSet<CalendarDay> dates2 = new HashSet<>();
-        dates2.add(CalendarDay.from(2023, 5, 15));
-        dates2.add(CalendarDay.from(2023, 5, 16));
-
-        HashSet<CalendarDay> dates3 = new HashSet<>();
-        dates3.add(CalendarDay.from(2023, 5, 16));
-        dates3.add(CalendarDay.from(2023, 5, 17));
-        dates3.add(CalendarDay.from(2023, 5, 18));
-
-        materialCalendarView.setTileHeightDp(70);
-
-        //지정된 날짜에 textview & rect 표시
-        TextDecorator decorator = new TextDecorator(ct, dates,"text",  Color.RED, 1);
-        materialCalendarView.addDecorator(decorator);
-
-        TextDecorator decorator2 = new TextDecorator(ct, dates2,"text",  Color.GREEN, 2);
-        materialCalendarView.addDecorator(decorator2);
-
-        TextDecorator decorator3 = new TextDecorator(ct, dates3,"text",  Color.BLUE, 3);
-        materialCalendarView.addDecorator(decorator3);
-
-        TextDecorator decorator4 = new TextDecorator(ct, dates3,"text",  Color.YELLOW, 4);
-        materialCalendarView.addDecorator(decorator4);
-
-        TextDecorator decorator5 = new TextDecorator(ct, dates3,"text",  Color.MAGENTA, 5);
-        materialCalendarView.addDecorator(decorator5);
+        /*materialCalendarView.addDecorators(
+                new SundayDecorator(),
+                new SaturdayDecorator()
+        );
 
          */
 
@@ -220,16 +196,27 @@ public class HomeFragment extends Fragment {
                 }
 
                 //해당 날짜에 해당하는 과제 보여주는 listview 보여주기 위한 adapter
-                ArrayAdapter<Assignment> asgAdapter = new ArrayAdapter<Assignment>(ct, android.R.layout.simple_spinner_item, list){
+                ArrayAdapter<Assignment> asgAdapter = new ArrayAdapter<Assignment>(ct, android.R.layout.simple_list_item_1, list){
                     @NonNull
                     @Override
                     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-                        TextView textView = (TextView) super.getView(position, convertView, parent);
+                        View view = convertView;
+                        if (view == null) {
+                            LayoutInflater inflater = LayoutInflater.from(ct);
+                            view = inflater.inflate(R.layout.listview_asg, parent, false);
+
+                        }
+
+                        TextView subjectTextView = view.findViewById(R.id.subjectTextView);
+                        TextView asgTextView = view.findViewById(R.id.asgTextView);
+
                         Assignment asg = getItem(position);
                         if (asg != null) {
-                            textView.setText(asg.getSubjectName()+"\n"+asg.getAsgName());
+                            subjectTextView.setText(asg.getSubjectName());
+                            asgTextView.setText(asg.getAsgName());
                         }
-                        return textView;
+
+                        return view;
                     }
                 };
                 listView.setAdapter(asgAdapter);
@@ -262,7 +249,7 @@ public class HomeFragment extends Fragment {
                     for(int i=0;i<list.size();i++){
                         msg += list.get(i);
                     }
-                    textView.setText(msg);
+                    //textView.setText(msg);
                 }
                 else if(key.equals("checked_color")){
                     //ArrayList<Integer> list = getArguments().getIntegerArrayList(key);
@@ -275,7 +262,7 @@ public class HomeFragment extends Fragment {
                     doneColor= selectColor(list.get(0));
                     undoneColor= selectColor(list.get(1));
 
-                    textView2.setText(msg);
+                    //textView2.setText(msg);
                 }
             }
         }

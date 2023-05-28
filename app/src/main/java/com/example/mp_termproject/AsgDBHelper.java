@@ -105,4 +105,62 @@ public class AsgDBHelper extends SQLiteOpenHelper {
         }
         return result;
     }
+
+    // 특정 날짜에 해당하는 과제 반환
+    public ArrayList<String> getAssignmentByDate(String endDate) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        ArrayList<String> assignments = new ArrayList<>();
+
+        String[] columns = {KEY_COURSE, KEY_TITLE, KEY_SUBMISSION};
+        String selection = KEY_DUEDATE + "=?";
+        String[] selectionArgs = {endDate};
+
+        Cursor c = db.query(TABLE_NAME, columns, selection, selectionArgs, null, null, null);
+        int courseIndex = c.getColumnIndex(KEY_COURSE);
+        int titleIndex = c.getColumnIndex(KEY_TITLE);
+        int submissionIndex = c.getColumnIndex(KEY_SUBMISSION);
+
+        while (c.moveToNext()) {
+            String course = c.getString(courseIndex);
+            String title = c.getString(titleIndex);
+            String submission = c.getString(submissionIndex);
+
+            String assignmentInfo = "과목 - " + course + "\n"
+                    + "과제명 - " + title + "\n"
+                    + "제출여부 - " + submission + "\n";
+
+            assignments.add(assignmentInfo);
+        }
+
+        c.close();
+        return assignments;
+    }
+
+    //
+    public ArrayList<String> getAssignmentsBySubmission() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        ArrayList<String> assignments = new ArrayList<>();
+
+        String[] columns = {KEY_COURSE, KEY_TITLE};
+        String selection = KEY_SUBMISSION + "=? OR " + KEY_SUBMISSION + "=?";
+        String[] selectionArgs = {"미제출", "No attempt"};
+
+        Cursor c = db.query(TABLE_NAME, columns, selection, selectionArgs, null, null, null);
+
+        int courseIndex = c.getColumnIndex(KEY_COURSE);
+        int titleIndex = c.getColumnIndex(KEY_TITLE);
+
+        while (c.moveToNext()) {
+            String course = c.getString(courseIndex);
+            String title = c.getString(titleIndex);
+
+            String assignmentInfo = "과목 - " + course + "\n"
+                    + "과제명 - " + title + "\n";
+            Log.d("adgDB", "제출 안 한 과제 : " + assignmentInfo);
+            assignments.add(assignmentInfo);
+        }
+
+        c.close();
+        return assignments;
+    }
 }

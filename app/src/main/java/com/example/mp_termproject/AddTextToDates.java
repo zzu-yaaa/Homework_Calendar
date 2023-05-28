@@ -15,7 +15,13 @@ public class AddTextToDates implements LineBackgroundSpan {
     private int order;
 
     public AddTextToDates(String text, int barColor, int order) {
-        dayPrice = text;
+        if(text.length()>4){
+            dayPrice = text.substring(0, 3) + "...";
+        }
+        else{
+            dayPrice = text;
+        }
+        //dayPrice = text;
         this.barColor = barColor;
         this.order = order;
     }
