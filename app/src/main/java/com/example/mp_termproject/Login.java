@@ -79,6 +79,7 @@ public class Login extends AppCompatActivity {
         AsgHelper.insertAsg("소프트웨어공학", "Final", "2023-05-30",
                 "Not sumbmitted", "https://cyber.gachon.ac.kr/mod/assign/view.php?id=656475");
 
+        colorHelper.insertColor("#BEDBFC","#FFB531");
 
         //Bundle bundle = new Bundle();
         name = (EditText) findViewById(R.id.name);

@@ -45,8 +45,8 @@ import java.util.Set;
  */
 public class HomeFragment extends Fragment {
 
-    int doneColor=Color.parseColor("#BEDBFC");
-    int undoneColor=Color.parseColor("#FFB531");
+    int doneColor;  //=Color.parseColor("#BEDBFC");
+    int undoneColor;    //=Color.parseColor("#FFB531");
     private MaterialCalendarView materialCalendarView;
     TextView dateTextView;
     ListView listView;
@@ -126,6 +126,15 @@ public class HomeFragment extends Fragment {
         //저장된 db 불러오기
         courseHelper = new CourseDBHelper(ct);
         AsgHelper = new AsgDBHelper(ct);
+        colorHelper = new ColorDBHelper(ct);
+
+        //db에 지정된 색으로 bar색상 변경
+        String[] savedColor = colorHelper.selectColor();
+
+        doneColor = Color.parseColor(savedColor[0]);
+        undoneColor = Color.parseColor(savedColor[1]);
+
+
 
 
         /*materialCalendarView.addDecorators(
@@ -259,8 +268,8 @@ public class HomeFragment extends Fragment {
                         msg += list.get(i);
                     }
 
-                    doneColor= selectColor(list.get(0));
-                    undoneColor= selectColor(list.get(1));
+                    //doneColor= selectColor(list.get(0));
+                    //undoneColor= selectColor(list.get(1));
 
                     //textView2.setText(msg);
                 }

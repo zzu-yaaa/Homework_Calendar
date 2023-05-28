@@ -28,6 +28,8 @@ public class ColorFragment extends Fragment {
     RadioButton pink;
     RadioButton blue;
 
+    ColorDBHelper colorHelper;
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -73,11 +75,14 @@ public class ColorFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_color, container, false);
+        ct = container.getContext();
         btn_save = view.findViewById(R.id.save_color_button);
         green = view.findViewById(R.id.color_green);
         blue = view.findViewById(R.id.color_blue);
         pink = view.findViewById(R.id.color_pink);
         red = view.findViewById(R.id.color_red);
+
+        colorHelper = new ColorDBHelper(ct);
 
         btn_save.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,23 +95,24 @@ public class ColorFragment extends Fragment {
                 if(red.isChecked()){
 
                     checkedId.add(red.getId());
-                    checkedColor.add((String) red.getText());
+                    checkedColor.add("#FF0000");
 
                 }else if(green.isChecked()){
 
                     checkedId.add(green.getId());
-                    checkedColor.add((String) green.getText());
+                    checkedColor.add("#00FF00");
 
                 }
                 if(blue.isChecked()){
                     checkedId.add(blue.getId());
-                    checkedColor.add((String) blue.getText());
+                    checkedColor.add("#0000FF");
 
                 }else if(pink.isChecked()){
                     checkedId.add(pink.getId());
-                    checkedColor.add((String) pink.getText());
+                    checkedColor.add("#FF00FF");
                 }
 
+                colorHelper.updateColor(checkedColor.get(0), checkedColor.get(1));
                 //bundle.putIntegerArrayList("checked_color",checkedId);
                 bundle.putStringArrayList("checked_color",checkedColor);
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
