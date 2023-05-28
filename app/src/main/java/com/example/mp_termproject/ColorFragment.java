@@ -85,24 +85,30 @@ public class ColorFragment extends Fragment {
 
                 Bundle bundle = new Bundle();
                 ArrayList<Integer> checkedId = new ArrayList<>();
+                ArrayList<String> checkedColor = new ArrayList<>();
 
                 if(red.isChecked()){
 
                     checkedId.add(red.getId());
+                    checkedColor.add((String) red.getText());
 
                 }else if(green.isChecked()){
 
                     checkedId.add(green.getId());
+                    checkedColor.add((String) green.getText());
 
                 }
                 if(blue.isChecked()){
                     checkedId.add(blue.getId());
+                    checkedColor.add((String) blue.getText());
 
                 }else if(pink.isChecked()){
                     checkedId.add(pink.getId());
+                    checkedColor.add((String) pink.getText());
                 }
 
-                bundle.putIntegerArrayList("checked_color",checkedId);
+                //bundle.putIntegerArrayList("checked_color",checkedId);
+                bundle.putStringArrayList("checked_color",checkedColor);
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                 HomeFragment homeFragment = new HomeFragment();
                 homeFragment.setArguments(bundle);

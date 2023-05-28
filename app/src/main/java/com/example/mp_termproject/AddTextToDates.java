@@ -1,5 +1,6 @@
 package com.example.mp_termproject;
 
+import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -11,8 +12,8 @@ public class AddTextToDates implements LineBackgroundSpan {
 
     private String dayPrice;
     private int barColor;
-
     private int order;
+
     public AddTextToDates(String text, int barColor, int order) {
         dayPrice = text;
         this.barColor = barColor;
@@ -28,27 +29,45 @@ public class AddTextToDates implements LineBackgroundSpan {
         Paint rectPaint = new Paint();
         rectPaint.setColor(barColor);
 
+        int startTop = top+50;
+        int startBottom = bottom+36;
+        int startBottom2 = bottom+30;
+        int topUp = 30;
+
+        for(int i=1;i<=10;i++){
+            if(order==i){
+                Log.i("coordinate", "top : "+top+" bottom : "+bottom);
+                canvas.drawRect(left, startTop, right, startBottom, rectPaint);
+                canvas.drawText(dayPrice, ((left + right) / 8), startBottom2, paint);
+            }
+            startTop +=30;
+            startBottom +=30;
+            startBottom2 +=30;
+        }
+        /*
         if(order==1){
             Log.i("coordinate", "top : "+top+" bottom : "+bottom);
             canvas.drawRect(left, top+50, right, bottom+36, rectPaint);
-            canvas.drawText(dayPrice, ((left + right) / 4), (bottom + 30), paint);
+            canvas.drawText(dayPrice, ((left + right) / 8), (bottom + 30), paint);
         }
         else if(order==2){
             canvas.drawRect(left, top+80, right, bottom+66, rectPaint);
-            canvas.drawText(dayPrice, ((left + right) / 4), (bottom + 60), paint);
+            canvas.drawText(dayPrice, ((left + right) / 8), (bottom + 60), paint);
         }
         else if(order==3){
             canvas.drawRect(left, top+110, right, bottom+96, rectPaint);
-            canvas.drawText(dayPrice, ((left + right) / 4), (bottom + 90), paint);
+            canvas.drawText(dayPrice, ((left + right) / 8), (bottom + 90), paint);
         }
         else if(order==4){
             canvas.drawRect(left, top+140, right, bottom+126, rectPaint);
-            canvas.drawText(dayPrice, ((left + right) / 4), (bottom + 120), paint);
+            canvas.drawText(dayPrice, ((left + right) / 8), (bottom + 120), paint);
         }
         else if(order==5){
             canvas.drawRect(left, top+170, right, bottom+156, rectPaint);
-            canvas.drawText(dayPrice, ((left + right) / 4), (bottom + 150), paint);
+            canvas.drawText(dayPrice, ((left + right) / 8), (bottom + 150), paint);
         }
+
+         */
 
 
         //paint 설정 건드리면 날짜도 같이 바뀜

@@ -1,5 +1,4 @@
 package com.example.mp_termproject;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -10,9 +9,9 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
-/*
-Database helper for Assignment table
-Assignment columns(String) : course name, assignment title, start date, due date, submission state, grade
+/**
+ * Database helper for Assignment table
+ * Assignment columns(String) : course name, assignment title, start date, due date, submission state, grade
  */
 public class AsgDBHelper extends SQLiteOpenHelper {
     //database information
@@ -24,10 +23,8 @@ public class AsgDBHelper extends SQLiteOpenHelper {
     static final String KEY_INFOID = "_id";
     static final String KEY_COURSE = "course_name";
     static final String KEY_TITLE = "title";
-    static final String KEY_STARTDATE = "start_date";
     static final String KEY_DUEDATE = "due_date";
     static final String KEY_SUBMISSION = "submission";
-    static final String KEY_GRADE = "grade";
     static final String KEY_LINK = "link";
 
     static final String DB_CREATE =
@@ -35,10 +32,8 @@ public class AsgDBHelper extends SQLiteOpenHelper {
                     + KEY_INFOID + " integer primary key autoincrement, "
                     + KEY_COURSE + " text not null, "
                     + KEY_TITLE + " text not null, "
-                    + KEY_STARTDATE + " text not null, "
                     + KEY_DUEDATE + " text not null, "
                     + KEY_SUBMISSION + " text not null, "
-                    + KEY_GRADE + " text, "
                     + KEY_LINK + " text not null)";
 
     Cursor c;
@@ -67,16 +62,14 @@ public class AsgDBHelper extends SQLiteOpenHelper {
     }
 
     // insert data in course table
-    void insertAsg (String course, String title, String start, String end, String submission, String grade, String link) {
+    public void insertAsg (String course, String title, String end, String submission, String link) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
         values.put(KEY_COURSE, course);
         values.put(KEY_TITLE, title);
-        values.put(KEY_STARTDATE, start);
         values.put(KEY_DUEDATE, end);
         values.put(KEY_SUBMISSION, submission);
-        values.put(KEY_GRADE, grade);
         values.put(KEY_LINK, link);
 
         long result = db.insert(TABLE_NAME, null, values);
@@ -87,7 +80,6 @@ public class AsgDBHelper extends SQLiteOpenHelper {
         }
     }
 
-    //해당 강의의 과제들 index 전송
     public ArrayList selectAssignment(String course){
         SQLiteDatabase db = this.getReadableDatabase();
         c = db.query(TABLE_NAME, null,null,null,null,null, null);
@@ -95,6 +87,19 @@ public class AsgDBHelper extends SQLiteOpenHelper {
 
         while(c.moveToNext()) {
             if(c.getString(1).equals(course)){
+                result.add(c.getPosition());   //row의 index 추가
+            }
+        }
+        return result;
+    }
+
+    public ArrayList selectAssignmentDate(String end){
+        SQLiteDatabase db = this.getReadableDatabase();
+        c = db.query(TABLE_NAME, null,null,null,null,null, null);
+        ArrayList<Integer> result = new ArrayList<>();
+
+        while(c.moveToNext()) {
+            if(c.getString(3).equals(end)){
                 result.add(c.getPosition());   //row의 index 추가
             }
         }

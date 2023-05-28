@@ -1,14 +1,21 @@
 package com.example.mp_termproject;
 
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -17,10 +24,9 @@ import java.util.ArrayList;
 public class SubjectFragment extends Fragment {
 
     Button save_btn;
-    CheckBox swEngineering;
-    CheckBox DataScience;
-    CheckBox mobilePw;
-    CheckBox seminar;
+    CourseDBHelper courseHelper;
+    SQLiteDatabase courseDb;
+    MyCustomAdapter adapter;
     Context ct;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -69,66 +75,142 @@ public class SubjectFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_subject, container, false);
         ct = container.getContext();
 
+        //Generate list View from ArrayList
+        displayListView(v,ct);
+
+
         save_btn = v.findViewById(R.id.save_subject_button);
-        swEngineering = v.findViewById(R.id.swEngineering);
-        DataScience = v.findViewById(R.id.DataScience);
-        mobilePw = v.findViewById(R.id.mobilePw);
-        seminar = v.findViewById(R.id.seminar);
 
         save_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //선택된 과목 id담을 arraylist
-                ArrayList<Integer> selectedSubject = new ArrayList<>();
-                //선택되지 않은 과목 id담을 arraylist
-                ArrayList<Integer> unselectedSubject = new ArrayList<>();
 
-                //Home Fragment로 어떤변수를 보내는게 좋을지 정해야함
-                //id만 보내도 home fragment에서 안보여지게 가능한지
-                //과목명text도 있어야 한다면 1.checkedTextView 2.ArrayList hashmap
-                if(swEngineering.isChecked()){
-                    selectedSubject.add(swEngineering.getId());
-                }else {
-                    unselectedSubject.add(swEngineering.getId());
-
-                }
-
-                if(DataScience.isChecked()){
-                    selectedSubject.add(DataScience.getId());
-                }else{
-                    unselectedSubject.add(DataScience.getId());
-
-                }
-
-                if(mobilePw.isChecked()){
-                    selectedSubject.add(mobilePw.getId());
-                }else{
-                    unselectedSubject.add(mobilePw.getId());
-
-                }
-
-                if(seminar.isChecked()){
-                    selectedSubject.add(seminar.getId());
-                }else{
-                    unselectedSubject.add(seminar.getId());
-
-                }
-                String msg = "보내고 ";
-                for(int i=0;i<selectedSubject.size();i++){
-                    msg += selectedSubject.get(i) +",";
-                }
-                Toast.makeText(ct,msg,Toast.LENGTH_LONG).show();
-
-                Bundle bundle = new Bundle();
-                bundle.putIntegerArrayList("SelectedSubject",selectedSubject);
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                 HomeFragment homeFragment = new HomeFragment();
-                homeFragment.setArguments(bundle);
                 transaction.replace(R.id.fragment_container_view,homeFragment);
                 transaction.commit();
             }
         });
 
         return v;
+    }
+
+    private void displayListView(View v, Context ct) {
+        ListView listView = v.findViewById(R.id.listViewC);
+        courseHelper = new CourseDBHelper(ct);
+        //check여부 불러오기
+        courseDb = courseHelper.getReadableDatabase();
+        String[] check = courseHelper.getCheck();
+
+        //강의명 course list에 추가
+        ArrayList<CourseCheck> courseList = new ArrayList<CourseCheck>();
+        String[][] courseArray = courseHelper.selectCourse();
+
+        int cNum = courseHelper.courseNum();
+        for (int i = 0; i < cNum; i++) {
+
+            if(check[i].equals("check")) {
+                CourseCheck course = new CourseCheck(courseArray[i][0], true);
+                courseList.add(course);
+                Log.d("course list", "강의 list에 추가 : " + course.getName() + " " + " 상태 : " + check[i]);
+            }else{
+                CourseCheck course = new CourseCheck(courseArray[i][0], false);
+                courseList.add(course);
+                Log.d("course list", "강의 list에 추가 : " + course.getName() + " " + " 상태 : " + check[i]);
+            }
+        }
+
+        //Adapter 생성 후 ListView에 지정
+        adapter = new MyCustomAdapter(ct, R.layout.listview_info, courseList);
+        listView = (ListView) v.findViewById(R.id.listViewC);
+        listView.setAdapter(adapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            }
+        });
+    }
+
+    private class MyCustomAdapter extends ArrayAdapter<CourseCheck> {
+        private ArrayList<CourseCheck> courseList;
+        ViewHolder holder;
+
+        public MyCustomAdapter(@NonNull Context context, int resource, ArrayList<CourseCheck> courseList) {
+            super(context, resource, courseList);
+            this.courseList = new ArrayList<CourseCheck>();
+            this.courseList.addAll(courseList);
+        }
+
+        private class ViewHolder {
+            TextView name;
+            CheckBox check;
+        }
+
+        //listView 항목 표시
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            holder = null;
+            Log.v("Convert View 실행", String.valueOf(position));
+
+            courseHelper = new CourseDBHelper(ct);
+            //check여부 불러오기
+            courseDb = courseHelper.getWritableDatabase();
+
+            if (convertView == null) {
+                LayoutInflater inflater = (LayoutInflater) ct.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                convertView = inflater.inflate(R.layout.listview_info, null);
+
+                holder = new ViewHolder();
+                holder.name = (TextView) convertView.findViewById(R.id.courseName);
+                holder.check = (CheckBox) convertView.findViewById(R.id.checkB);
+                convertView.setTag(holder);
+
+                //체크박스 상태 변경 이벤트 설정
+                holder.check.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        CheckBox cb = (CheckBox) v;
+                        CourseCheck course = (CourseCheck) cb.getTag();
+
+                        holder.check.setSelected(cb.isChecked());   //체크표시하기
+                        courseList.get(position).setSelected(cb.isChecked()); // 선택 여부 업데이트
+
+                        //체크 변경사항 db에 반영
+                        if(cb.isChecked() == true){
+                            courseHelper.updateChecked(position, "check");
+                            //Log.d("checkbox to db", "db 몇번째 check? "+position);
+                        }
+                        if (cb.isChecked() == false){
+                            courseHelper.updateChecked(position, null);
+                            //Log.d("checkbox to db", "db 몇번째 null? "+position);
+                        }
+
+                        for (CourseCheck c : courseList) {
+                            Log.d("checkbox", "Name: " + c.getName() + ", Selected: " + c.isSelected()); //확인용
+                        }
+                    }
+                });
+
+            } else {
+                holder = (ViewHolder) convertView.getTag();
+            }
+
+            CourseCheck course = courseList.get(position);
+            holder.name.setText(course.getName());
+            holder.check.setChecked(course.isSelected());
+            holder.name.setTag(course);
+
+            Log.d("checkbox", "check box " + course.getName() + " 추가");
+
+            return convertView;
+        }
+    }
+    @Override
+    public void onDestroy() {
+        courseHelper.close();
+        courseDb.close();
+        adapter.clear();
+        super.onDestroy();
     }
 }

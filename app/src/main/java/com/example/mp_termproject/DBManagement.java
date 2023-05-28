@@ -34,19 +34,19 @@ public class DBManagement  extends AppCompatActivity {
         setDatabase();  //set database table
 
         /* db test하는 코드 */
-        courseHelper.insertCourse("소프트웨어공학", "정옥란");
-        courseHelper.insertCourse("사물인터넷개론", "최재혁");
-        courseHelper.insertCourse("모바일프로그래밍", "오영민");
-        courseHelper.insertCourse("소프트웨어산업세미나", "조정찬 / 최재영 / 민홍");
+        courseHelper.insertCourse("소프트웨어공학", "정옥란", "check");
+        courseHelper.insertCourse("사물인터넷개론", "최재혁", "check");
+        courseHelper.insertCourse("모바일프로그래밍", "오영민", "check");
+        courseHelper.insertCourse("소프트웨어산업세미나", "조정찬 / 최재영 / 민홍", "check");
 
-        AsgHelper.insertAsg("모바일프로그래밍", "lab2", "2023-03-23 00:00:00", "2023-03-24 23:30:00",
-                "Submitted for grading", "20.00", "https://cyber.gachon.ac.kr/mod/assign/view.php?id=653001");
-        AsgHelper.insertAsg("사물인터넷개론", "[과제1] Paper reading (~5/11)", "2023-04-27 00:00:00", "2023-05-11 23:59:00",
-                "Submitted for grading", null, "https://cyber.gachon.ac.kr/mod/assign/view.php?id=671292");
-        AsgHelper.insertAsg("모바일프로그래밍", "lab3", "2023-03-29 00:00:00", "2023-03-31 23:30:00",
-                "Not sumbmitted", null, "https://cyber.gachon.ac.kr/mod/assign/view.php?id=656475");
-        AsgHelper.insertAsg("소프트웨어공학", "Summary for chapter 1 & 2", "2023-03-29 00:00:00", "2023-03-31 23:30:00",
-                "Not sumbmitted", null, "https://cyber.gachon.ac.kr/mod/assign/view.php?id=656475");
+        AsgHelper.insertAsg("모바일프로그래밍", "lab2",  "2023-03-24",
+                "Submitted for grading",  "https://cyber.gachon.ac.kr/mod/assign/view.php?id=653001");
+        AsgHelper.insertAsg("사물인터넷개론", "[과제1] Paper reading (~5/11)", "2023-05-11",
+                "Submitted for grading", "https://cyber.gachon.ac.kr/mod/assign/view.php?id=671292");
+        AsgHelper.insertAsg("모바일프로그래밍", "lab3", "2023-03-31",
+                "Not sumbmitted", "https://cyber.gachon.ac.kr/mod/assign/view.php?id=656475");
+        AsgHelper.insertAsg("소프트웨어공학", "Summary for chapter 1 & 2", "2023-03-31",
+                "Not sumbmitted", "https://cyber.gachon.ac.kr/mod/assign/view.php?id=656475");
 
         colorHelper.insertColor("pink", "green");
         //colorHelper.updateColor("blue", "skyblue");
