@@ -49,25 +49,30 @@
         android:id="@+id/user_part"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:layout_below="@+id/suggestion_part">
+        android:layout_below="@+id/suggestion_part"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp">
+
         <TextView
             android:id="@+id/userInput"
             android:layout_width="0dp"
             android:layout_height="70dp"
+            android:layout_gravity="center_vertical"
             android:layout_weight="6"
             android:background="@drawable/round_style"
-            android:layout_gravity="center_vertical"
             android:gravity="right|center_vertical"
             android:padding="10dp"
             android:text="테스트"
             android:textSize="16dp" />
+
         <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginLeft="10dp"
+            android:layout_width="57dp"
+            android:layout_height="70dp"
             android:layout_gravity="center_vertical"
-            android:src="@drawable/user" />
+
+            android:src="@drawable/char2" />
         <!--icon reference "https://icons8.com/icon/21350/customer"-->
     </LinearLayout>
 
@@ -82,7 +87,7 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginRight="10dp"
-            android:src="@drawable/megaphone" />
+            android:src="@drawable/char5" />
         <!-- icon reference "https://icons8.com/icon/MuBvfid167aN/megaphone"-->
         <EditText
             android:id="@+id/answer"

@@ -230,6 +230,16 @@ public class HomeFragment extends Fragment {
                 };
                 listView.setAdapter(asgAdapter);
 
+                int totalHeight = 0;
+                for (int i = 0; i < asgAdapter.getCount(); i++) {
+                    View listItem = asgAdapter.getView(i, null, listView);
+                    listItem.measure(0, 0);
+                    totalHeight += listItem.getMeasuredHeight();
+                }
+                ViewGroup.LayoutParams layoutParams = listView.getLayoutParams();
+                layoutParams.height = totalHeight + (listView.getDividerHeight() * (asgAdapter.getCount() - 1));
+                listView.setLayoutParams(layoutParams);
+
                 //listview 항목 클릭하면 과제 페이지로 연결
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override

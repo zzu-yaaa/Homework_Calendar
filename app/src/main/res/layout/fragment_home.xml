@@ -8,7 +8,7 @@
     android:id="@+id/home_fragment">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
@@ -20,15 +20,32 @@
             app:mcv_selectionColor="#EAEAEA"/>
         <!--app:mcv_tileHeight="80dp"-->
 
-        <TextView
-            android:id="@+id/dateTextView"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="오늘 날짜"
-            android:textSize="20dp"
-            android:textStyle="bold"
-            android:layout_margin="10dp"
-            />
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:src="@drawable/baram_3" />
+
+            <TextView
+                android:id="@+id/dateTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="오늘 날짜"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:layout_margin="11dp"
+                android:fontFamily="@font/nanumeb"
+                />
+
+        </LinearLayout>
+
+
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -47,7 +64,7 @@
                     <ListView
                         android:id="@+id/listView"
                         android:layout_width="match_parent"
-                        android:layout_height="500dp" />
+                        android:layout_height="wrap_content" />
 
                 </LinearLayout>
 
