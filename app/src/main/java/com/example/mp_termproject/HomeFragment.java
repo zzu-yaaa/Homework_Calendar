@@ -270,14 +270,14 @@ public class HomeFragment extends Fragment {
                     }
                     //textView.setText(msg);
                 }
-                else if(key.equals("checked_color")){
+                else if(key.equals("colors")){
                     //ArrayList<Integer> list = getArguments().getIntegerArrayList(key);
                     ArrayList<String> list = getArguments().getStringArrayList(key);
                     String msg = "선택된 색상 : ";
                     for(int i=0;i<list.size();i++){
                         msg += list.get(i);
                     }
-
+                    Log.d("Colors from colorFragment : ",msg);
                     //doneColor= selectColor(list.get(0));
                     //undoneColor= selectColor(list.get(1));
 

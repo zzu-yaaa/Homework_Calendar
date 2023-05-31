@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     //NavigationView navigationView;
     private HomeFragment homeFragment;
     private SubjectFragment subjectFragment;
-
+    NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +42,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         homeFragment = (HomeFragment) getSupportFragmentManager().findFragmentById(R.id.home_fragment);
         subjectFragment = (SubjectFragment) getSupportFragmentManager().findFragmentById(R.id.subject_fragment);
-
+        navigationView = findViewById(R.id.navigation_view);
+        navigationView.setItemIconTintList(null);
         setLayout();
 
         Toolbar toolbar = findViewById(R.id.toolbar);

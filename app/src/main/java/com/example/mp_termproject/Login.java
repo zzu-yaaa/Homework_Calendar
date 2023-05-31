@@ -62,7 +62,7 @@ public class Login extends AppCompatActivity {
 
         setDatabase();  //set database table
 
-/*
+
         courseHelper.insertCourse("소프트웨어공학", "정옥란", "check");
         courseHelper.insertCourse("사물인터넷개론", "최재혁", "check");
         courseHelper.insertCourse("모바일프로그래밍", "오영민", "check");
@@ -79,7 +79,7 @@ public class Login extends AppCompatActivity {
         AsgHelper.insertAsg("소프트웨어공학", "Final", "2023-05-30",
                 "Not sumbmitted", "https://cyber.gachon.ac.kr/mod/assign/view.php?id=656475");
 
- */
+
 
         colorHelper.insertColor("#BEDBFC","#FFB531");
 
