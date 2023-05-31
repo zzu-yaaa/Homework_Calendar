@@ -2,6 +2,7 @@ package com.example.mp_termproject;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -26,6 +27,7 @@ public class UserDBHelper extends SQLiteOpenHelper  {
                     + KEY_MAJOR + " text not null, "
                     + KEY_NUM + " text not null)";
 
+    Cursor c;
     //specify DB name in the constructor
     public UserDBHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
@@ -49,7 +51,6 @@ public class UserDBHelper extends SQLiteOpenHelper  {
         onCreate(db); //create new database
     }
 
-
     // insert data in course table
     public void insertUser(String name, String major, String num) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -65,5 +66,23 @@ public class UserDBHelper extends SQLiteOpenHelper  {
         } else {
             Log.d("database", "user db 데이터 추가 성공");
         }
+    }
+
+    public String[] selectUser(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        c = db.query(TABLE_NAME, null,null,null,null,null, null);
+        String[] result = new String[3];
+
+        c.moveToFirst();   //get data from first row
+        String name = c.getString(1);
+        String major = c.getString(2);
+        String studentNum = c.getString(3);
+
+        result[0] = name;
+        result[1] = major;
+        result[2] = studentNum;
+        Log.d("user select", "유저 전달 완료");
+
+        return result;
     }
 }

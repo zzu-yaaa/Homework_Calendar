@@ -1,6 +1,7 @@
 package com.example.mp_termproject;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
@@ -35,6 +36,8 @@ public class ColorFragment extends Fragment {
     ArrayList<String> color_list = new ArrayList<>();
     Spinner spinner_done;
     Spinner spinner_undone;
+
+    ColorDBHelper colorHelper;
 
     private ColorAdapter colorAdapter;
 
@@ -85,9 +88,13 @@ public class ColorFragment extends Fragment {
         View view =  inflater.inflate(R.layout.fragment_color, container, false);
         btn_save = view.findViewById(R.id.save_color_button);
         btn_cancel = view.findViewById(R.id.cancel_color_button);
+        ct = container.getContext();
+        colorHelper = new ColorDBHelper(ct);
 
         spinner_done = view.findViewById(R.id.spinner_done);
         spinner_undone = view.findViewById(R.id.spinner_undone);
+        Resources res = getResources();
+
         List<Colors> colorList = new ArrayList<>();
 
         Colors red = new Colors();
@@ -116,7 +123,7 @@ public class ColorFragment extends Fragment {
         colorList.add(green);
 
         Colors skyblue = new Colors();
-        skyblue.setColor("SKY BLUE");
+        skyblue.setColor("SKYBLUE");
         skyblue.setImage(R.drawable.skyblue);
         colorList.add(skyblue);
 
@@ -148,8 +155,21 @@ public class ColorFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Log.d("spinner_done",colorList.get(position).getColor());
                 String doneColor = colorList.get(position).getColor();
+                String colorName = doneColor.toLowerCase(); // 비교할 문자열
+                Resources resources = ct.getResources();
+                String colorCode = null;
+                int colorResId = resources.getIdentifier(colorName, "color", ct.getPackageName());
+                if (colorResId != 0) {
+                    int colorValue = resources.getColor(colorResId);
+                    colorCode = String.format("#%06X", (0xFFFFFF & colorValue));
+                    // 색상 코드를 사용하여 필요한 작업 수행
+                    Log.d("Color", "Color Code: " + colorCode);
+                } else {
+                    // 색상 리소스를 찾을 수 없는 경우에 대한 처리
+                    Log.d("Color", "Color Resource Not Found");
+                }
 
-                    color_list.add(doneColor);
+                color_list.add(colorCode);
 
             }
 
@@ -165,8 +185,21 @@ public class ColorFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Log.d("spinner_undone",colorList.get(position).getColor());
                 String undoneColor = colorList.get(position).getColor();
+                String colorName = undoneColor.toLowerCase(); // 비교할 문자열
+                Resources resources = ct.getResources();
+                String colorCode = null;
+                int colorResId = resources.getIdentifier(colorName, "color", ct.getPackageName());
+                if (colorResId != 0) {
+                    int colorValue = resources.getColor(colorResId);
+                    colorCode = String.format("#%06X", (0xFFFFFF & colorValue));
+                    // 색상 코드를 사용하여 필요한 작업 수행
+                    Log.d("Color", "Color Code: " + colorCode);
+                } else {
+                    // 색상 리소스를 찾을 수 없는 경우에 대한 처리
+                    Log.d("Color", "Color Resource Not Found");
+                }
 
-                    color_list.add(undoneColor);
+                    color_list.add(colorCode);
 
             }
 
@@ -184,10 +217,11 @@ public class ColorFragment extends Fragment {
                 Bundle bundle = new Bundle();
                 //color_list의 0,1번 인덱스 값은 RED가 들어감 2번이 done, 3번이 undone 색
                 Log.d("color_list", String.valueOf(color_list.size()));
-                bundle.putStringArrayList("colors", color_list);
+                colorHelper.updateColor(color_list.get(2), color_list.get(3));
+                //bundle.putStringArrayList("colors", color_list);
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                 HomeFragment homeFragment = new HomeFragment();
-                homeFragment.setArguments(bundle);
+                //homeFragment.setArguments(bundle);
                 transaction.replace(R.id.fragment_container_view,homeFragment);
                 transaction.commit();
 

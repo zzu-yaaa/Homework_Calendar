@@ -28,12 +28,18 @@ import java.util.HashMap;
 import java.util.HashSet;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-
     private DrawerLayout drawer;
     //NavigationView navigationView;
     private HomeFragment homeFragment;
     private SubjectFragment subjectFragment;
+
+    UserDBHelper userHelper;
     NavigationView navigationView;
+
+    TextView name;
+    TextView studentNum;
+    TextView major;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +50,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         subjectFragment = (SubjectFragment) getSupportFragmentManager().findFragmentById(R.id.subject_fragment);
         navigationView = findViewById(R.id.navigation_view);
         navigationView.setItemIconTintList(null);
+        View headerView = navigationView.getHeaderView(0);
+        userHelper = new UserDBHelper(this);
+        String result[] = userHelper.selectUser();
         setLayout();
 
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -52,7 +61,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.navigation_view);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawer,toolbar,
                 R.string.navigation_drawer_open
@@ -62,6 +70,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
+
+        name = headerView.findViewById(R.id.name);
+        major = headerView.findViewById(R.id.major);
+        studentNum = headerView.findViewById(R.id.studentNum);
+        name.setText(result[0]);
+        studentNum.setText(result[2]);
+        major.setText(result[1]);
 
     }
 
@@ -73,9 +88,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch(menuItem.getItemId()){
             case R.id.home:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_view, new HomeFragment()).commit();
-                break;
-            case R.id.myInfo:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_view, new InfoFragment()).commit();
                 break;
             case R.id.color:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_view, new ColorFragment()).commit();

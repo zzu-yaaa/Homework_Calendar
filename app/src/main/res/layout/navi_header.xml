@@ -5,13 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:layout_marginTop="25dp"
     android:background="@color/skyblue">
 
     <LinearLayout
+        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1">
+        >
         <TextView
             android:id="@+id/name"
             android:layout_width="0dp"
@@ -27,22 +27,30 @@
             android:layout_width="0dp"
             android:layout_height="120dp"
             android:layout_marginTop="20dp"
-            android:src="@drawable/board"
+            android:src="@drawable/corong"
             android:layout_weight="1"
             android:scaleType="centerInside"/>
 
     </LinearLayout>
 
     <TextView
-        android:id="@+id/email"
+        android:id="@+id/studentNum"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:layout_weight="1"
-        android:text ="gachon@gachon.ac.kr"
+        android:text ="학번"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="10dp"
+        android:textColor="@color/blue"
+        android:textSize="13sp"/>
+    <TextView
+        android:id="@+id/major"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text ="전공"
         android:layout_marginLeft="20dp"
         android:layout_marginBottom="20dp"
         android:textColor="@color/blue"
-        android:textSize="10sp"/>
+        android:textSize="13sp"/>
 
 </LinearLayout>

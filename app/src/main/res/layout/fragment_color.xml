@@ -5,15 +5,36 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ColorFragment"
-    android:id="@+id/color_fragment"
-    android:background="@color/lightblue">
+    android:id="@+id/color_fragment">
 
+    <LinearLayout
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
 
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="50dp"
+            android:src="@drawable/splash"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="색상 선택"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="20dp"
+            android:textSize="20dp"
+            android:fontFamily="@font/nanumeb"
+            android:textColor="@color/grey"/>
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="150dp"
         android:orientation="vertical">
 
         <LinearLayout
@@ -23,6 +44,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/nanumb"
                 android:id="@+id/done"
                 android:text="완료한 과제 색깔 "
                 android:layout_marginTop="20dp"
@@ -56,13 +78,14 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="280dp"
+        android:layout_marginTop="300dp"
         android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/undone"
+            android:fontFamily="@font/nanumb"
             android:text="완료하지 않은 과제 색깔 "
             android:layout_marginLeft="20dp"
             android:textColor="@color/blue"/>
@@ -84,7 +107,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="450dp">
+        android:layout_marginTop="600dp">
 
         <Button
             android:layout_width="110dp"
@@ -92,7 +115,7 @@
             android:id="@+id/cancel_color_button"
             android:text="Cancel"
             android:textColor="@color/blue"
-            android:background="@drawable/button_custom"
+            android:background="@drawable/round_button"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -105,7 +128,7 @@
             android:layout_height="40dp"
             android:id="@+id/save_color_button"
             android:text="Save"
-            android:background="@drawable/button_custom"
+            android:background="@drawable/round_button"
             android:textColor="@color/blue"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintRight_toRightOf="parent"

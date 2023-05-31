@@ -8,12 +8,6 @@
         android:title="Home"/>
 
     <item
-        android:id="@+id/myInfo"
-        android:icon="@drawable/info"
-        android:title="내정보"
-        />
-
-    <item
         android:id="@+id/color"
         android:icon="@drawable/splash"
         android:title="색상선택"
