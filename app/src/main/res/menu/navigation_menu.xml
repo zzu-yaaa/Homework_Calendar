@@ -9,13 +9,13 @@
 
     <item
         android:id="@+id/myInfo"
-        android:icon="@drawable/person"
+        android:icon="@drawable/info"
         android:title="내정보"
         />
 
     <item
         android:id="@+id/color"
-        android:icon="@drawable/pallete"
+        android:icon="@drawable/splash"
         android:title="색상선택"
         />
 
@@ -27,7 +27,7 @@
 
     <item
         android:id="@+id/speech"
-        android:icon="@drawable/subject"
+        android:icon="@drawable/voice_2"
         android:title="음성인식"
         />
 </menu>

@@ -3,41 +3,71 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".SubjectFragment"
-    android:id="@+id/subject_fragment">
+    android:id="@+id/subject_fragment"
+    android:background="@color/white">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@drawable/info_box"/>
 
     <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
+        <ImageView
+            android:id="@+id/subject_Name"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="5"
+            android:src="@drawable/subject"
+            android:gravity="center" />
+
+        <ImageView
+            android:id="@+id/subject_check"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/outline_check_box_24"
+            android:layout_marginRight="13dp"
+            android:layout_marginTop="13dp"
+            />
+
+    </LinearLayout>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_marginTop="70dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="과목선택"
-            android:textSize="20sp"/>
-
-        <LinearLayout
+        <ListView
+            android:id="@+id/listViewC"
             android:layout_width="match_parent"
-            android:layout_height="520dp"
-            android:orientation="vertical"
-            tools:context=".ListViewCheckBoxes">
-            <ListView
-                android:id="@+id/listViewC"
-                android:layout_width="match_parent"
-                android:layout_height="520dp"
-                android:choiceMode="multipleChoice" />
-
-        </LinearLayout>
+            android:layout_height="420dp"
+            android:choiceMode="multipleChoice"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+           />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/save_subject_button"
-            android:layout_marginLeft="20dp"
-            android:text="Save" />
+            android:layout_gravity="center"
+            android:background="@drawable/button_custom"
+            android:text="Save"
+            app:layout_constraintTop_toBottomOf="@+id/listViewC"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
 
 </FrameLayout>
