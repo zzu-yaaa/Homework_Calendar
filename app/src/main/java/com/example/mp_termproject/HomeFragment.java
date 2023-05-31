@@ -287,17 +287,6 @@ public class HomeFragment extends Fragment {
         }
 
         //로그인/DB 관련 함수--------------------
-        loginTest = (Button) v.findViewById(R.id.loginBtn);
-        loginTest.setOnClickListener(new View.OnClickListener(){
-
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ct.getApplicationContext(), Login.class);
-                startActivity(intent);
-            }
-        });
-
-        Log.d("check", "home 다시 돌아오다");  //확인용 로그캣
 
         //course table 정보 전부 가져오기
         courseArray = courseHelper.selectCourse();

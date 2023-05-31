@@ -2,33 +2,41 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center_vertical"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/login_back">
+
+    <ImageView
+        android:layout_marginTop="85dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@drawable/slogan_3"
+        android:layout_gravity="center_horizontal"/>
 
     <TextView
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="40dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="MP Term Project"
-        android:textStyle="bold"
-        android:textSize="20dp"
-        android:gravity="center"/>
+        android:gravity="center"
+        android:text="Homework Calendar"
+        android:fontFamily="@font/nanumeb"
+        android:textSize="30dp"
+        android:textStyle="bold" />
 
     <LinearLayout
         android:id="@+id/ID"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="  아이디   : "
-            android:textStyle="bold"
-            android:textSize="17dp"
-            android:layout_marginLeft="10dp"/>
+
         <EditText
+            android:paddingStart="15dp"
+            android:hint="ID"
             android:id="@+id/name"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"/>
+            android:layout_width="250dp"
+            android:layout_height="40dp"
+            android:background="@drawable/round_style"
+            android:layout_margin="10dp"/>
     </LinearLayout>
 
     <LinearLayout
@@ -36,39 +44,24 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="비밀번호 : "
-            android:textStyle="bold"
-            android:textSize="17dp"
-            android:layout_marginLeft="10dp"/>
+
         <EditText
+            android:paddingStart="15dp"
+            android:hint="Password"
             android:id="@+id/password"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:inputType="textPassword"/>
+            android:layout_width="250dp"
+            android:layout_height="40dp"
+            android:inputType="textPassword"
+            android:background="@drawable/round_style"/>
     </LinearLayout>
     <Button
         android:id="@+id/lgnBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="150dp"
+        android:layout_height="40dp"
         android:layout_gravity="center"
-        android:backgroundTint="#0C58AE"
-        android:text="로그인"/>
-    <TextView
-        android:id="@+id/showText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:text="결과값 출력"
-        android:textSize="15dp"
-        android:layout_margin="10dp"/>
-    <Button
-        android:id="@+id/returnBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:backgroundTint="#0C58AE"
-        android:text="홈으로"/>
+        android:backgroundTint="#BDDAFB"
+        android:background="@drawable/round_button"
+        android:layout_margin="40dp"
+        android:text="Login"/>
+
 </LinearLayout>

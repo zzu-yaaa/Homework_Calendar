@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="CustomTheme" parent="@style/Theme.AppCompat.DayNight.NoActionBar">
+        <!-- 글꼴 설정 -->
+        <item name="android:fontFamily">@font/nanumr</item>
+    </style>
+
+</resources>

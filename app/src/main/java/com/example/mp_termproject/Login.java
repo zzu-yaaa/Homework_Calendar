@@ -30,11 +30,11 @@ import java.util.Map;
 
 public class Login extends AppCompatActivity {
 
+    private Loading loading;
     private String url = "https://cyber.gachon.ac.kr/login.php";
     TextView showResult;
     EditText name, password;
     Button loginBtn;
-    Button returnBtn;
     String loginId, loginPw;
     String[] courseContent;
     String profContent;
@@ -60,6 +60,8 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
 
+        loading = new Loading(this);
+
         setDatabase();  //set database table
 
 /*
@@ -81,12 +83,11 @@ public class Login extends AppCompatActivity {
 
  */
 
-        colorHelper.insertColor("#BEDBFC","#FFB531");
+        colorHelper.updateColor("#BEDBFC","#FFB531");
 
         //Bundle bundle = new Bundle();
         name = (EditText) findViewById(R.id.name);
         password = (EditText) findViewById(R.id.password);
-        showResult = (TextView) findViewById(R.id.showText);
 
         /*
         1. login
@@ -97,6 +98,14 @@ public class Login extends AppCompatActivity {
         loginBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
+                //로딩화면시작
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        loading.show();
+                    }
+                });
+
                 //입력한 아이디, 비번 가져오기
                 loginId = name.getText().toString();
                 loginPw = password.getText().toString();
@@ -266,23 +275,26 @@ public class Login extends AppCompatActivity {
                                         }
                                     }
                                 }
+                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                startActivity(intent);
                             }
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
+                        //로딩화면 끝
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                loading.dismiss();
+                            }
+
+                        });
+
                     }
                 }.start();  // thread end
             }
-        }); // OnClickListener end
 
-        returnBtn = findViewById(R.id.returnBtn);
-        returnBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);
-            }
-        });
+        }); // OnClickListener end
 
     }
     @Override

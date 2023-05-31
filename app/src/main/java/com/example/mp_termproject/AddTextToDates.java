@@ -35,7 +35,7 @@ public class AddTextToDates implements LineBackgroundSpan {
         Paint rectPaint = new Paint();
         rectPaint.setColor(barColor);
 
-        int startTop = top+50;
+        int startTop = top+45;
         int startBottom = bottom+36;
         int startBottom2 = bottom+30;
         int topUp = 30;
@@ -43,7 +43,7 @@ public class AddTextToDates implements LineBackgroundSpan {
         for(int i=1;i<=10;i++){
             if(order==i){
                 Log.i("coordinate", "top : "+top+" bottom : "+bottom);
-                canvas.drawRect(left, startTop, right, startBottom, rectPaint);
+                canvas.drawRoundRect(left, startTop, right, startBottom, 20, 20, rectPaint);
                 canvas.drawText(dayPrice, ((left + right) / 8), startBottom2, paint);
             }
             startTop +=30;
