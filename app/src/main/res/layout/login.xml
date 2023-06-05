@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/login_back">
+
+    <ImageView
+        android:layout_marginTop="85dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@drawable/slogan_3"
+        android:layout_gravity="center_horizontal"/>
+
+    <TextView
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="40dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Homework Calendar"
+        android:fontFamily="@font/nanumeb"
+        android:textSize="30dp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:id="@+id/ID"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
+        <EditText
+            android:paddingStart="15dp"
+            android:hint="ID"
+            android:id="@+id/name"
+            android:layout_width="250dp"
+            android:layout_height="40dp"
+            android:background="@drawable/round_style"
+            android:layout_margin="10dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/PW"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
+        <EditText
+            android:paddingStart="15dp"
+            android:hint="Password"
+            android:id="@+id/password"
+            android:layout_width="250dp"
+            android:layout_height="40dp"
+            android:inputType="textPassword"
+            android:background="@drawable/round_style"/>
+    </LinearLayout>
+    <Button
+        android:id="@+id/lgnBtn"
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:backgroundTint="#BDDAFB"
+        android:background="@drawable/round_button"
+        android:layout_margin="40dp"
+        android:text="Login"/>
+
+</LinearLayout>
