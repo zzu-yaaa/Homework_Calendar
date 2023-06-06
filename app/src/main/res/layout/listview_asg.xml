@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/round_style"
+    android:padding="5dp"
+    >
+
+    <TextView
+        android:id="@+id/subjectTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="과목이름"
+        android:textSize="16sp"
+        android:textColor="@android:color/black"
+        android:fontFamily="@font/nanumr"
+        android:layout_marginLeft="2dp"
+        android:padding="8dp"/>
+
+    <TextView
+        android:id="@+id/asgTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="과제이름"
+        android:textSize="14sp"
+        android:textColor="@android:color/darker_gray"
+        android:fontFamily="@font/nanumr"
+        android:layout_marginLeft="10dp"
+        android:paddingBottom="5dp"
+        />
+
+</LinearLayout>
